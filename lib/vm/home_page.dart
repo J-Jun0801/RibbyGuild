@@ -49,10 +49,11 @@ class HomeViewModel extends Cubit<AuthState> {
   }
 
   Future<void> _updateUserPushTokenByIndex(MemberModel memberModel) async {
-    getFirebaseToken().then((value) async {
-      await updateSingleUser(memberModel.index, value);
+    // getFirebaseToken().then((value) async {
+    //   await updateSingleUser(memberModel.index, value);
+      await updateSingleUser(memberModel.index, null);
       final list = await getBoardList();
       emit(state.copyWith(memberModel: memberModel, boards: list, authStatus: AuthStatus.authed));
-    });
+    // });
   }
 }

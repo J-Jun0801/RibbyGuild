@@ -1,0 +1,291 @@
+{
+  "member": {
+    "user1": {
+      "index" : 1,
+      "jobNo" : 41,
+      "pushToken": null,
+      "nickName": "소소해",
+      "position" : "master"
+    },
+    "user2": {
+      "index" : 2,
+      "jobNo" : 21,
+      "pushToken": null,
+      "nickName": "곱게자란소녀",
+      "position" : "sub_master"
+    },
+    "user3": {
+      "index" : 3,
+      "jobNo" : 20,
+      "pushToken": null,
+      "nickName": "좋아",
+      "position" : "sub_master"
+    },
+    "user4": {
+      "index" : 4,
+      "jobNo" : 41,
+      "pushToken": null,
+      "nickName": "파르딕",
+      "position" : "sub_master"
+    },
+    "user5": {
+      "index" : 5,
+      "jobNo" : 22,
+      "pushToken": null,
+      "nickName": "s앙마s",
+      "position" : "member"
+    },
+    "user6": {
+      "index" : 6,
+      "jobNo" : 52,
+      "pushToken": null,
+      "nickName": "딩초루",
+      "position" : "member"
+    },
+    "user7": {
+      "index" : 7,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "바다별하",
+      "position" : "member"
+    },
+    "user8": {
+      "index" : 8,
+      "jobNo" : 41,
+      "pushToken": null,
+      "nickName": "반면삼랑",
+      "position" : "member"
+    },
+    "user9": {
+      "index" : 9,
+      "jobNo" : 40,
+      "pushToken": null,
+      "nickName": "복돌",
+      "position" : "admin"
+    },
+    "user10": {
+      "index" : 10,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "우울해",
+      "position" : "member"
+    },
+    "user11": {
+      "index" : 11,
+      "jobNo" : 60,
+      "pushToken": null,
+      "nickName": "상바이",
+      "position" : "member"
+    },
+    "user12": {
+      "index" : 12,
+      "jobNo" : 11,
+      "pushToken": null,
+      "nickName": "은빛시린달",
+      "position" : "member"
+    },
+    "user13": {
+      "index" : 13,
+      "jobNo" : 30,
+      "pushToken": null,
+      "nickName": "초록망고",
+      "position" : "member"
+    },
+    "user14": {
+      "index" : 14,
+      "jobNo" : 22,
+      "pushToken": null,
+      "nickName": "쫄쫄이",
+      "position" : "member"
+    },
+    "user15": {
+      "index" : 15,
+      "jobNo" : 42,
+      "pushToken": null,
+      "nickName": "천오천",
+      "position" : "member"
+    },
+    "user16": {
+      "index" : 16,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "팡아",
+      "position" : "member"
+    },
+    "user17": {
+      "index" : 17,
+      "jobNo" : 12,
+      "pushToken": null,
+      "nickName": "루이파파",
+      "position" : "member"
+    },
+    "user18": {
+      "index" : 18,
+      "jobNo" : 33,
+      "pushToken": null,
+      "nickName": "현란한",
+      "position" : "member"
+    },
+    "user19": {
+      "index" : 19,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "s폰토게네s",
+      "position" : "member"
+    },
+    "user20": {
+      "index" : 20,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "두식2",
+      "position" : "member"
+    },
+    "user21": {
+      "index" : 21,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "오더",
+      "position" : "member"
+    },
+    "user22": {
+      "index" : 22,
+      "jobNo" : 42,
+      "pushToken": null,
+      "nickName": "연락처",
+      "position" : "member"
+    },
+    "user23": {
+      "index" : 23,
+      "jobNo" : 50,
+      "pushToken": null,
+      "nickName": "그라미",
+      "position" : "member"
+    },
+    "user24": {
+      "index" : 20,
+      "jobNo" : 32,
+      "pushToken": null,
+      "nickName": "주르르",
+      "position" : "member"
+    },
+    "user25": {
+      "index" : 25,
+      "jobNo" : 21,
+      "pushToken": null,
+      "nickName": "쏘찐솜",
+      "position" : "member"
+    },
+    "user26": {
+      "index" : 26,
+      "jobNo" : 33,
+      "pushToken": null,
+      "nickName": "쵸연",
+      "position" : "member"
+    },
+    "user27": {
+      "index" : 27,
+      "jobNo" : 33,
+      "pushToken": null,
+      "nickName": "치지직꼬마코코",
+      "position" : "member"
+    },
+    "user28": {
+      "index" : 28,
+      "jobNo" : 21,
+      "pushToken": null,
+      "nickName": "쿠궁냥궁",
+      "position" : "member"
+    },
+    "user29": {
+      "index" : 29,
+      "jobNo" : 62,
+      "pushToken": null,
+      "nickName": "프루티",
+      "position" : "member"
+    }
+  },
+
+  "board" : {
+    "board1" : {
+      "index" : 1,
+      "type" : "Abyss",
+      "title" : "6월 1일 어비스",
+      "isDeadLine" : false,
+      "maxPartySize" : 4,
+      "participants" : {
+        "user7": {
+          "index" : 7,
+          "jobNo" : 32,
+          "pushToken": null,
+          "nickName": "바다별하",
+          "power" : 27000,
+          "position" : "member"
+        },
+        "user1": {
+          "index" : 1,
+          "jobNo" : 41,
+          "pushToken": null,
+          "nickName": "소소해",
+          "power" : 21000,
+          "position" : "master"
+        },
+        "user2": {
+          "index" : 2,
+          "jobNo" : 21,
+          "pushToken": null,
+          "nickName": "곱게자란소녀",
+          "power" : 24000,
+          "position" : "sub_master"
+        },
+        "user3": {
+          "index" : 3,
+          "jobNo" : 20,
+          "pushToken": null,
+          "nickName": "좋아",
+          "power" : 29000,
+          "position" : "sub_master"
+        },
+        "user4": {
+          "index" : 4,
+          "jobNo" : 41,
+          "pushToken": null,
+          "nickName": "파르딕",
+          "power" : 30000,
+          "position" : "sub_master"
+        },
+        "user10": {
+          "index" : 10,
+          "jobNo" : 32,
+          "pushToken": null,
+          "nickName": "우울해",
+          "power" : 20000,
+          "position" : "member"
+        },
+        "user11": {
+          "index" : 11,
+          "jobNo" : 60,
+          "pushToken": null,
+          "nickName": "상바이",
+          "power" : 22000,
+          "position" : "member"
+        },
+        "user12": {
+          "index" : 12,
+          "jobNo" : 11,
+          "pushToken": null,
+          "nickName": "은빛시린달",
+          "power" : 27000,
+          "position" : "member"
+        },
+        "user13": {
+          "index" : 13,
+          "jobNo" : 30,
+          "pushToken": null,
+          "nickName": "초록망고",
+          "power" : 20000,
+          "position" : "member"
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ import 'package:libby_guild/res/strings.dart';
 import 'package:libby_guild/ui/page/home_page.dart';
 import 'package:libby_guild/vm/home_page.dart';
 
-import '../firebase/firebase_cloud_messing.dart';
+import 'firebase/firebase_cloud_messing.dart';
 
 final MyLocalStorage localStorage = MyLocalStorage();
 

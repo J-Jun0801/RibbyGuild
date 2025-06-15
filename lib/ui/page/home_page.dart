@@ -9,7 +9,7 @@ import 'package:libby_guild/firebase/firebase_cloud_messing.dart';
 import 'package:libby_guild/firebase/real_time_database.dart';
 import 'package:libby_guild/res/constant_res.dart';
 import 'package:libby_guild/res/text_themes.dart';
-import 'package:libby_guild/ui/main.dart';
+import 'package:libby_guild/main.dart';
 import 'package:libby_guild/ui/page/detail_board_page.dart';
 import 'package:libby_guild/ui/widgets/bottom_sheets.dart';
 import 'package:libby_guild/ui/widgets/buttons.dart';

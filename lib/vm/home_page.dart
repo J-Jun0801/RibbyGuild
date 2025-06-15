@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:libby_guild/common/local_storage.dart';
 import 'package:libby_guild/firebase/firebase_cloud_messing.dart';
 import 'package:libby_guild/firebase/real_time_database.dart';
-import 'package:libby_guild/ui/main.dart';
+import 'package:libby_guild/main.dart';
 import 'package:libby_guild/vm/models/auth.dart';
 
 import '../common/logger.dart';

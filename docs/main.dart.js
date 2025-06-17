@@ -28307,11 +28307,11 @@ aeh:function aeh(){this.a=$},
 aMa(a){var s=a.h(0,"participants"),r=A.z(t.N,t.MP)
 if(t.f.b(s))J.m3(s,new A.a5a(r))
 return new A.km(a.h(0,"index"),a.h(0,"type"),a.h(0,"title"),a.h(0,"maxPartySize"),a.h(0,"isDeadLine"),r)},
-aBr(a){if(a==="Abyss")return"\uc5b4\ube44\uc2a4"
+aBr(a){if(a==="abyss")return"\uc5b4\ube44\uc2a4"
 else if(a==="raid1")return"\ub808\uc774\ub4dc - \uae00\ub77c\uc2a4\uae30\ube0c\ub128"
 else if(a==="raid2")return"\ub808\uc774\ub4dc - \ud654\uc774\ud2b8\uc11c\ud050\ubc84\uc2a4"
 else return""},
-aMc(a){if(a===0)return"Abyss"
+aMc(a){if(a===0)return"abyss"
 else if(a===1)return"raid1"
 else if(a===2)return"raid2"
 else return""},

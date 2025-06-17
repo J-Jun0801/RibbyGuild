@@ -54,7 +54,7 @@ class BoardModel {
   }
 
   static String convertTypeToDesc(String type) {
-    if (type == "Abyss") {
+    if (type == "abyss") {
       return "어비스";
     } else if (type == "raid1") {
       return "레이드 - 글라스기브넨";
@@ -67,7 +67,7 @@ class BoardModel {
 
   static String convertType(int index) {
     if (index == 0) {
-      return "Abyss";
+      return "abyss";
     } else if (index == 1) {
       return "raid1";
     } else if (index == 2) {

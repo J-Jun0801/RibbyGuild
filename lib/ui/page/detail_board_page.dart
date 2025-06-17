@@ -90,122 +90,127 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
   }
 
   List<Party> createSmartParties(List<MemberModel> members, {int maxPartySize = 4}) {
-    // 전투력 높은 순으로 정렬
     members = List.from(members)..sort((a, b) => (b.power ?? 0).compareTo(a.power ?? 0));
-
     final totalPartyCount = (members.length / maxPartySize).ceil();
     final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
 
-    int partyIndex = 0;
-
-    // snake 방향
-    bool forward = true;
-
-    // 직업별 나누기
     final healers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Healer').toList();
     final tankers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Tanker').toList();
     final dealers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Dealer').toList();
 
-    // 각 파티 최소 힐1
-    for (var i = 0; i < totalPartyCount; i++) {
-      if (healers.isNotEmpty) {
-        parties[i].members.add(healers.removeAt(0));
+    void addToLowestPowerParty(MemberModel member) {
+      // 인원 꽉 찬 파티는 제외하고 전투력 낮은 파티 찾기
+      final availableParties = parties.where((p) => p.canAdd(member, maxPartySize)).toList();
+      if (availableParties.isEmpty) return; // 전부 full이면 그냥 무시
+
+      final targetParty = availableParties.reduce((a, b) => a.totalPower < b.totalPower ? a : b);
+      targetParty.members.add(member);
+    }
+
+    // 힐러 먼저 배치
+    for (final healer in healers) {
+      addToLowestPowerParty(healer);
+    }
+
+    // 탱커 배치
+    for (final tanker in tankers) {
+      addToLowestPowerParty(tanker);
+    }
+
+    // 딜러 2명씩 배치
+    int dealerCountPerParty = 2;
+    for (int i = 0; i < dealerCountPerParty; i++) {
+      final currentDealers = List<MemberModel>.from(dealers);
+      for (final dealer in currentDealers) {
+        addToLowestPowerParty(dealer);
+        dealers.remove(dealer);
+        if (dealers.isEmpty) break;
       }
     }
 
-    // 각 파티 최소 탱1 (없으면 힐러로)
-    for (var i = 0; i < totalPartyCount; i++) {
-      if (tankers.isNotEmpty) {
-        parties[i].members.add(tankers.removeAt(0));
-      } else if (healers.isNotEmpty) {
-        parties[i].members.add(healers.removeAt(0));
-      }
-    }
-
-    // 각 파티 최소 딜러 2명
-    for (var j = 0; j < 2; j++) {
-      for (var i = 0; i < totalPartyCount; i++) {
-        if (dealers.isNotEmpty) {
-          parties[i].members.add(dealers.removeAt(0));
-        }
-      }
-    }
-
-    // 남은 인원 (힐/탱/딜 전부) 다시 전투력 높은 순으로 snake로 배분
+    // 남은 애들 (딜러/힐러/탱커)
     final remainingMembers = [
-      ...healers,
-      ...tankers,
       ...dealers,
     ];
 
-    while (remainingMembers.isNotEmpty) {
-      final member = remainingMembers.removeAt(0);
-
-      while (!parties[partyIndex].canAdd(member, maxPartySize)) {
-        partyIndex += (forward ? 1 : -1);
-
-        if (partyIndex >= totalPartyCount) {
-          partyIndex = totalPartyCount - 1;
-          forward = false;
-        } else if (partyIndex < 0) {
-          partyIndex = 0;
-          forward = true;
-        }
-      }
-
-      parties[partyIndex].members.add(member);
+    for (final member in remainingMembers) {
+      addToLowestPowerParty(member);
     }
 
     return parties;
   }
 
 
+
 // List<Party> createSmartParties(List<MemberModel> members, {int maxPartySize = 4}) {
   //   // 전투력 높은 순으로 정렬
   //   members = List.from(members)..sort((a, b) => (b.power ?? 0).compareTo(a.power ?? 0));
   //
-  //   // 직업별로 나누기
+  //   final totalPartyCount = (members.length / maxPartySize).ceil();
+  //   final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
+  //
+  //   int partyIndex = 0;
+  //
+  //   // snake 방향
+  //   bool forward = true;
+  //
+  //   // 직업별 나누기
   //   final healers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Healer').toList();
   //   final tankers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Tanker').toList();
   //   final dealers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Dealer').toList();
   //
-  //   final totalMemberCount = members.length;
-  //   final int totalPartyCount = (totalMemberCount / maxPartySize).ceil(); // ex. 9명 -> 3파티
-  //   final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
-  //
-  //   // 1. 힐러 배정 (파티 순서대로)
-  //   int partyIndex = 0;
-  //   for (final healer in healers) {
-  //     while (parties[partyIndex % totalPartyCount].members.length >= maxPartySize) {
-  //       partyIndex++;
+  //   // 각 파티 최소 힐1
+  //   for (var i = 0; i < totalPartyCount; i++) {
+  //     if (healers.isNotEmpty) {
+  //       parties[i].members.add(healers.removeAt(0));
   //     }
-  //     parties[partyIndex % totalPartyCount].members.add(healer);
-  //     partyIndex++;
   //   }
   //
-  //   // 2. 탱커 배정
-  //   partyIndex = 0;
-  //   for (final tanker in tankers) {
-  //     while (parties[partyIndex % totalPartyCount].members.length >= maxPartySize) {
-  //       partyIndex++;
+  //   // 각 파티 최소 탱1 (없으면 힐러로)
+  //   for (var i = 0; i < totalPartyCount; i++) {
+  //     if (tankers.isNotEmpty) {
+  //       parties[i].members.add(tankers.removeAt(0));
+  //     } else if (healers.isNotEmpty) {
+  //       parties[i].members.add(healers.removeAt(0));
   //     }
-  //     parties[partyIndex % totalPartyCount].members.add(tanker);
-  //     partyIndex++;
   //   }
   //
-  //   // 3. 딜러는 앞에서부터 가득 채우기 방식
-  //   partyIndex = 0;
-  //   for (final dealer in dealers) {
-  //     // 파티 인원 maxPartySize 넘으면 다음 파티로
-  //     while (partyIndex < totalPartyCount && parties[partyIndex].members.length >= maxPartySize) {
-  //       partyIndex++;
+  //   // 각 파티 최소 딜러 2명
+  //   for (var j = 0; j < 2; j++) {
+  //     for (var i = 0; i < totalPartyCount; i++) {
+  //       if (dealers.isNotEmpty) {
+  //         parties[i].members.add(dealers.removeAt(0));
+  //       }
+  //     }
+  //   }
+  //
+  //   // 남은 인원 (힐/탱/딜 전부) 다시 전투력 높은 순으로 snake로 배분
+  //   final remainingMembers = [
+  //     ...healers,
+  //     ...tankers,
+  //     ...dealers,
+  //   ];
+  //
+  //   while (remainingMembers.isNotEmpty) {
+  //     final member = remainingMembers.removeAt(0);
+  //
+  //     while (!parties[partyIndex].canAdd(member, maxPartySize)) {
+  //       partyIndex += (forward ? 1 : -1);
+  //
+  //       if (partyIndex >= totalPartyCount) {
+  //         partyIndex = totalPartyCount - 1;
+  //         forward = false;
+  //       } else if (partyIndex < 0) {
+  //         partyIndex = 0;
+  //         forward = true;
+  //       }
   //     }
   //
-  //     if (partyIndex < totalPartyCount) {
-  //       parties[partyIndex].members.add(dealer);
-  //     }
+  //     parties[partyIndex].members.add(member);
   //   }
   //
   //   return parties;
   // }
+
+
 }

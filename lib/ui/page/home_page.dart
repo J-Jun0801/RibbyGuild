@@ -298,7 +298,7 @@ class _HomePageState extends State<HomePage> {
           widgetSpace(height: 10),
           CommonTextField(
             textEditingController: _powerTextEditingController,
-            hintText: "전투력 입력해주세요 (ex.25000)",
+            hintText: "전투력을 정확하게 입력해주세요. (근사치는 허용됩니다)",
             textInputType: TextInputType.number,
             valueChanged: (value) {
               bottomState(() {});

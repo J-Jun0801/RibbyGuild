@@ -11,7 +11,7 @@ enum Dealer implements JobInfo{
   longBowMan(22, "장궁병"),
   mage(30, "마법사"),
   fireMage(32, "화염 술사"),
-  electMage(33, "전격 술사"),
+  electMage(34, "전격 술사"),
   dancer(51, "댄서"),
   minstrel(52, "악사"),
   rogue(60, "도적"),

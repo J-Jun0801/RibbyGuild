@@ -44,7 +44,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                   child: Column(
                     children: [
                       if (boardModel.type == "raid1") ...[
-                        labelText(context: context, text: "총 인원 : ${boardModel.participants.length}명 "),
+                        labelText(context: context, text: "총 인원 : ${boardModel.participants.length}명"),
                         for (final member in boardModel.participants.values.toList()) ...[
                           Text(
                             "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)}",
@@ -70,7 +70,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        labelText(context: context, text: "${index + 1} 파티 (총 투력 : ${withComma(party.totalPower)})"),
+        labelText(context: context, text: "${index + 1} 파티\n총 투력 : ${withComma(party.totalPower)}\n 평균 투력 : ${withComma((party.totalPower/4).round())}"),
         widgetSpace(height: 3),
         paddingColumn(
           padding: const EdgeInsets.only(left: 20),

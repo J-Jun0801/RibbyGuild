@@ -105,10 +105,10 @@ Widget labelText({required BuildContext context, required String text}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   return Card(
-    color: colorScheme.secondarySkyBlue,
+    color: colorScheme.primaryColor,
     child: paddingText(
       padding: const EdgeInsets.all(8),
-      style: textTheme.labelLarge!,
+      style: textTheme.labelLarge!.copyWith(color: colorScheme.primaryWhite),
       text: text,
     ),
   );

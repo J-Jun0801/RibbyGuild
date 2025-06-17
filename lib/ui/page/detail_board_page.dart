@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:libby_guild/common/utils.dart';
 import 'package:libby_guild/ui/widgets/widgets.dart';
 
 import '../../data/board.dart';
@@ -29,7 +30,8 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
         builder: (context, state) {
           final homeViewModel = context.read<HomeViewModel>();
           final boardModel = homeViewModel.state.boards.where((element) => element.index == widget.boardIndex).first;
-          final parties = createSmartParties(boardModel.participants.values.toList(), maxPartySize: boardModel.maxPartySize);
+          final parties =
+              createSmartParties(boardModel.participants.values.toList(), maxPartySize: boardModel.maxPartySize);
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -41,10 +43,16 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      if (boardModel.type == "raid1") ... [
-                        for (final memberModel in boardModel.participants.values.toList())
-                          Text("${memberModel.nickName} / ${JobUtil.getJobNameByJobNo(memberModel.jobNo)} / ${memberModel.power}")
-                      ] else ... [
+                      if (boardModel.type == "raid1") ...[
+                        labelText(context: context, text: "총 인원 : ${boardModel.participants.length}명 "),
+                        for (final member in boardModel.participants.values.toList()) ...[
+                          Text(
+                            "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)}",
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          widgetSpace(height: 10)
+                        ]
+                      ] else ...[
                         for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i])
                       ]
                     ],
@@ -62,16 +70,18 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Text(
-          "$index 파티",
-          style: textTheme.titleLarge,
-        ),
+        labelText(context: context, text: "${index + 1} 파티 (총 투력 : ${withComma(party.totalPower)})"),
         widgetSpace(height: 3),
         paddingColumn(
           padding: const EdgeInsets.only(left: 20),
           children: [
-            for (var member in party.members)
-              Text("${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${member.power}")
+            for (var member in party.members) ...[
+              Text(
+                "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)}",
+                style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              widgetSpace(height: 10)
+            ]
           ],
         ),
         widgetSpace(height: 20),
@@ -127,7 +137,6 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
 
     return parties;
   }
-
 
   // 유틸: 리스트 쪼개기
   List<List<T>> _chunkList<T>(List<T> list, int size) {

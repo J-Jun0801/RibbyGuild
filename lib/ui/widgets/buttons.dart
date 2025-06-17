@@ -22,7 +22,7 @@ IgnorePointer primaryButton({
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  backgroundColor: isEnabled ? Theme.of(context).colorScheme.primary : colorScheme.grayGray5,
+                  backgroundColor: isEnabled ? Theme.of(context).colorScheme.primaryColor : colorScheme.grayGray5,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
               child: Text(buttonText, style: textTheme.bodyB1Medium.copyWith(color: colorScheme.primaryWhite)))));
 }

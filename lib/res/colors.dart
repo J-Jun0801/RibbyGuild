@@ -10,7 +10,7 @@ extension AppColors on ColorScheme {
 
   get primarySubMain => const Color(0xffFF4B13);
 
-  get primaryColor => const Color(0xff0064E1);
+  get primaryColor => Colors.indigoAccent;
 
   get primaryGray1 => const Color(0xff6f767b);
 

@@ -7,6 +7,7 @@ import 'package:libby_guild/data/board.dart';
 import 'package:libby_guild/data/member.dart';
 import 'package:libby_guild/firebase/firebase_cloud_messing.dart';
 import 'package:libby_guild/firebase/real_time_database.dart';
+import 'package:libby_guild/res/colors.dart';
 import 'package:libby_guild/res/constant_res.dart';
 import 'package:libby_guild/res/text_themes.dart';
 import 'package:libby_guild/main.dart';
@@ -178,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                     widgetSpace(height: 8),
                     Text(
                       boardModel.title,
-                      style: textTheme.titleLarge,
+                      style:
+                          textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: colorScheme.primaryColor),
                     )
                   ],
                 )
@@ -236,6 +238,13 @@ class _HomePageState extends State<HomePage> {
       return Column(
         children: [
           ToggleButtons(
+            borderRadius: BorderRadius.circular(12),
+            borderWidth: 2,
+            borderColor: Colors.indigoAccent.shade200,
+            selectedBorderColor: Colors.indigoAccent,
+            fillColor: Colors.indigoAccent,
+            color: Colors.black,
+            selectedColor: Colors.white,
             isSelected: List.generate(3, (i) => i == selectedIndex),
             onPressed: (int index) {
               bottomState(() {
@@ -249,7 +258,8 @@ class _HomePageState extends State<HomePage> {
                     ))
                 .toList(),
           ),
-          Text("${selectedDate.month}월 ${selectedDate.day}일")
+          widgetSpace(height: 10),
+          Text("${selectedDate.month}월 ${selectedDate.day}일",style:Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),)
         ],
       );
     });
@@ -260,6 +270,13 @@ class _HomePageState extends State<HomePage> {
       return Column(
         children: [
           ToggleButtons(
+            borderRadius: BorderRadius.circular(12),
+            borderWidth: 2,
+            borderColor: Colors.indigoAccent.shade200,
+            selectedBorderColor: Colors.indigoAccent,
+            fillColor: Colors.indigoAccent,
+            color: Colors.black,
+            selectedColor: Colors.white,
             isSelected: List.generate(2, (i) => i == attendSelectedIndex),
             onPressed: (int index) {
               bottomState(() {
@@ -273,10 +290,12 @@ class _HomePageState extends State<HomePage> {
                     ))
                 .toList(),
           ),
+          widgetSpace(height: 10),
           Text(
             "전투력",
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
           ),
+          widgetSpace(height: 10),
           CommonTextField(
             textEditingController: _powerTextEditingController,
             hintText: "전투력 입력해주세요 (ex.25000)",

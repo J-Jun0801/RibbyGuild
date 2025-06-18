@@ -1,11 +1,11 @@
 {
-    "name": "libby_guild",
-    "short_name": "libby_guild",
+    "name": "리비 길드",
+    "short_name": "리비 길드",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "리비 길드 입니다.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

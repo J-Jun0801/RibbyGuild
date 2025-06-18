@@ -271,8 +271,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             "전투력 정확하게 적어주세요. (근사치 허용 ex.29540 > 29000)\n균등하게 파티가 분배됩니다.",
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondaryRed),
           ),
+          widgetSpace(height: 5),
           ToggleButtons(
             borderRadius: BorderRadius.circular(12),
             borderWidth: 2,

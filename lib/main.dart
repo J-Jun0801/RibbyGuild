@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomeViewModel()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: '리비 길드',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
           useMaterial3: true,

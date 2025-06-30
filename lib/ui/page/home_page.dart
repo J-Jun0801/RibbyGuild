@@ -141,40 +141,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _makeCard(BoardModel boardModel, MemberModel memberModel) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
       onTap: () {
-        showWidgetTwoBottomSheet(
-          context: context,
-          widget: _makePowerContent(),
-          leftText: "파티보기",
-          onLeftPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
-            );
-          },
-          rightText: "투표하기",
-          onRightPressed: () async {
-            if (attendSelectedIndex == 0) {
-              final copyMemberModel = memberModel.copyWith(power: int.parse(_powerTextEditingController.text));
-              await updateParticipants(boardModel, copyMemberModel);
-            } else {
-              await removeParticipants(boardModel, memberModel);
-            }
-            await context.read<HomeViewModel>().initialize();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
-            );
-          },
-        );
+        _selectTime(context, boardModel, memberModel);
       },
       child: Container(
         width: double.infinity,
@@ -360,5 +332,42 @@ class _HomePageState extends State<HomePage> {
         ],
       );
     });
+  }
+
+  Future<void> _selectTime(BuildContext context,BoardModel boardModel, MemberModel memberModel) async {
+    final nowDateTime = DateTime.now();
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(DateTime(nowDateTime.year,nowDateTime.month,nowDateTime.day,20,0,0)),
+    );
+
+
+    final pickedTime = picked != null ? picked.format(context): "오후 8:00";
+
+    showWidgetTwoBottomSheet(
+      context: context,
+      widget: _makePowerContent(),
+      leftText: "파티보기",
+      onLeftPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
+        );
+      },
+      rightText: "투표하기",
+      onRightPressed: () async {
+        if (attendSelectedIndex == 0) {
+          final copyMemberModel = memberModel.copyWith(power: int.parse(_powerTextEditingController.text), time: pickedTime);
+          await updateParticipants(boardModel, copyMemberModel);
+        } else {
+          await removeParticipants(boardModel, memberModel);
+        }
+        await context.read<HomeViewModel>().initialize();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
+        );
+      },
+    );
   }
 }

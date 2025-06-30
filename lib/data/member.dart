@@ -8,6 +8,7 @@ class MemberModel {
   final String? pushToken;
   final String position;
   final int? power;
+  final String? time;
 
   MemberModel({
     required this.index,
@@ -16,6 +17,7 @@ class MemberModel {
     required this.pushToken,
     required this.position,
     this.power,
+    this.time,
   });
 
   factory MemberModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class MemberModel {
       pushToken: json[keyPushToken],
       position: json[keyPosition],
       power: json[keyPower],
+      time: json[keyTime],
     );
   }
 
@@ -37,6 +40,7 @@ class MemberModel {
       keyPushToken: pushToken,
       keyPosition: position,
       keyPower: power,
+      keyTime: time,
     };
   }
 
@@ -47,6 +51,7 @@ class MemberModel {
     String? pushToken,
     String? position,
     int? power,
+    String? time
   }) {
     return MemberModel(
       index: index ?? this.index,
@@ -55,6 +60,7 @@ class MemberModel {
       pushToken: pushToken ?? this.pushToken,
       position: position ?? this.position,
       power: power ?? this.power,
+      time: time ?? this.time,
     );
   }
 }

@@ -29,10 +29,17 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
       listener: (context, state) {},
       child: BlocBuilder<HomeViewModel, AuthState>(
         builder: (context, state) {
+          final textTheme = Theme.of(context).textTheme;
+
           final homeViewModel = context.read<HomeViewModel>();
           final boardModel = homeViewModel.state.boards.where((element) => element.index == widget.boardIndex).first;
+
+          final members = boardModel.participants.values.toList();
+          final eightPmMembers = members.where((m) => m.time == "오후 8:00").toList();
+          final otherMembers = members.where((m) => m.time != "오후 8:00").toList();
           final parties =
-              createSmartParties(boardModel.participants.values.toList(), maxPartySize: boardModel.maxPartySize);
+              createSmartParties(eightPmMembers, maxPartySize: boardModel.maxPartySize);
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -55,7 +62,27 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                           widgetSpace(height: 10)
                         ]
                       ] else ...[
-                        for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i])
+
+                        for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i]),
+                        Column(
+                          children: [
+                            labelText(context: context, text: "그 외"),
+                            widgetSpace(height: 3),
+                            paddingColumn(
+                              padding: const EdgeInsets.only(left: 20),
+                              children: [
+                                for (var member in otherMembers) ...[
+                                  Text(
+                                    "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
+                                    style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  widgetSpace(height: 10)
+                                ]
+                              ],
+                            ),
+                            widgetSpace(height: 20),
+                          ],
+                        )
                       ]
                     ],
                   ),

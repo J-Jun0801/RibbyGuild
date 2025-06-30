@@ -13,6 +13,7 @@ const keyNickName = "nickName";
 const keyPushToken = "pushToken";
 const keyPosition = "position";
 const keyPower = "power";
+const keyTime = "time";
 
 const keyType = "type";
 const keyTitle = "title";

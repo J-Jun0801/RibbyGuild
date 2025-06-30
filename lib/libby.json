@@ -1,4 +1,470 @@
 {
+  "board": {
+    "board1": {
+      "index": 1,
+      "isDeadLine": false,
+      "maxPartySize": 4,
+      "participants": {
+        "user1": {
+          "index": 1,
+          "jobNo": 41,
+          "nickName": "소소해",
+          "position": "master",
+          "power": 27695
+        },
+        "user14": {
+          "index": 14,
+          "jobNo": 22,
+          "nickName": "쫄쫄이",
+          "position": "member",
+          "power": 29996
+        },
+        "user19": {
+          "index": 19,
+          "jobNo": 32,
+          "nickName": "s폰토게네s",
+          "position": "member",
+          "power": 26238
+        },
+        "user2": {
+          "index": 2,
+          "jobNo": 21,
+          "nickName": "곱게자란소녀",
+          "position": "sub_master",
+          "power": 27000
+        },
+        "user23": {
+          "index": 23,
+          "jobNo": 50,
+          "nickName": "그라미",
+          "position": "member",
+          "power": 27500
+        },
+        "user26": {
+          "index": 26,
+          "jobNo": 33,
+          "nickName": "쵸연",
+          "position": "member",
+          "power": 29179
+        },
+        "user28": {
+          "index": 28,
+          "jobNo": 21,
+          "nickName": "쿠궁냥궁",
+          "position": "member",
+          "power": 31200
+        },
+        "user3": {
+          "index": 3,
+          "jobNo": 20,
+          "nickName": "좋아",
+          "position": "sub_master",
+          "power": 30900
+        },
+        "user4": {
+          "index": 4,
+          "jobNo": 41,
+          "nickName": "파르딕",
+          "position": "sub_master",
+          "power": 31670
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 27277
+        },
+        "user8": {
+          "index": 8,
+          "jobNo": 41,
+          "nickName": "반면삼랑",
+          "position": "member",
+          "power": 25278
+        },
+        "user9": {
+          "index": 9,
+          "jobNo": 40,
+          "nickName": "복돌",
+          "position": "admin",
+          "power": 28516
+        }
+      },
+      "title": "6월 16일 어비스",
+      "type": "abyss"
+    },
+    "board2": {
+      "index": 2,
+      "isDeadLine": false,
+      "maxPartySize": 8,
+      "participants": {
+        "user1": {
+          "index": 1,
+          "jobNo": 41,
+          "nickName": "소소해",
+          "position": "master",
+          "power": 27695
+        },
+        "user14": {
+          "index": 14,
+          "jobNo": 22,
+          "nickName": "쫄쫄이",
+          "position": "member",
+          "power": 29996
+        },
+        "user19": {
+          "index": 19,
+          "jobNo": 32,
+          "nickName": "s폰토게네s",
+          "position": "member",
+          "power": 26238
+        },
+        "user2": {
+          "index": 2,
+          "jobNo": 21,
+          "nickName": "곱게자란소녀",
+          "position": "sub_master",
+          "power": 28528
+        },
+        "user23": {
+          "index": 23,
+          "jobNo": 50,
+          "nickName": "그라미",
+          "position": "member",
+          "power": 27500
+        },
+        "user26": {
+          "index": 26,
+          "jobNo": 33,
+          "nickName": "쵸연",
+          "position": "member",
+          "power": 29179
+        },
+        "user28": {
+          "index": 28,
+          "jobNo": 21,
+          "nickName": "쿠궁냥궁",
+          "position": "member",
+          "power": 31200
+        },
+        "user3": {
+          "index": 3,
+          "jobNo": 20,
+          "nickName": "좋아",
+          "position": "sub_master",
+          "power": 30900
+        },
+        "user4": {
+          "index": 4,
+          "jobNo": 41,
+          "nickName": "파르딕",
+          "position": "sub_master",
+          "power": 31780
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 27277
+        },
+        "user8": {
+          "index": 8,
+          "jobNo": 41,
+          "nickName": "반면삼랑",
+          "position": "member",
+          "power": 25278
+        },
+        "user9": {
+          "index": 9,
+          "jobNo": 40,
+          "nickName": "복돌",
+          "position": "admin",
+          "power": 28516
+        }
+      },
+      "title": "6월 16일 레이드 - 글라스기브넨",
+      "type": "raid1"
+    },
+    "board3": {
+      "index": 3,
+      "isDeadLine": false,
+      "maxPartySize": 4,
+      "participants": {
+        "user2": {
+          "index": 2,
+          "jobNo": 21,
+          "nickName": "곱게자란소녀",
+          "position": "sub_master",
+          "power": 30073
+        },
+        "user22": {
+          "index": 22,
+          "jobNo": 42,
+          "nickName": "연락처",
+          "position": "member",
+          "power": 26216
+        },
+        "user23": {
+          "index": 23,
+          "jobNo": 50,
+          "nickName": "그라미",
+          "position": "member",
+          "power": 27500
+        },
+        "user26": {
+          "index": 26,
+          "jobNo": 33,
+          "nickName": "쵸연",
+          "position": "member",
+          "power": 29000
+        },
+        "user3": {
+          "index": 3,
+          "jobNo": 20,
+          "nickName": "좋아",
+          "position": "sub_master",
+          "power": 30500
+        },
+        "user4": {
+          "index": 4,
+          "jobNo": 41,
+          "nickName": "파르딕",
+          "position": "sub_master",
+          "power": 32004
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 27277
+        },
+        "user9": {
+          "index": 9,
+          "jobNo": 40,
+          "nickName": "복돌",
+          "position": "admin",
+          "power": 29387
+        }
+      },
+      "title": "6월 23일 어비스",
+      "type": "abyss"
+    },
+    "board4": {
+      "index": 4,
+      "isDeadLine": false,
+      "maxPartySize": 8,
+      "participants": {
+        "user1": {
+          "index": 1,
+          "jobNo": 41,
+          "nickName": "소소해",
+          "position": "master",
+          "power": 28771
+        },
+        "user10": {
+          "index": 10,
+          "jobNo": 32,
+          "nickName": "우울해",
+          "position": "member",
+          "power": 26000
+        },
+        "user2": {
+          "index": 2,
+          "jobNo": 21,
+          "nickName": "곱게자란소녀",
+          "position": "sub_master",
+          "power": 30073
+        },
+        "user22": {
+          "index": 22,
+          "jobNo": 42,
+          "nickName": "연락처",
+          "position": "member",
+          "power": 26216
+        },
+        "user23": {
+          "index": 23,
+          "jobNo": 50,
+          "nickName": "그라미",
+          "position": "member",
+          "power": 27500
+        },
+        "user26": {
+          "index": 26,
+          "jobNo": 33,
+          "nickName": "쵸연",
+          "position": "member",
+          "power": 29000
+        },
+        "user3": {
+          "index": 3,
+          "jobNo": 20,
+          "nickName": "좋아",
+          "position": "sub_master",
+          "power": 30500
+        },
+        "user4": {
+          "index": 4,
+          "jobNo": 41,
+          "nickName": "파르딕",
+          "position": "sub_master",
+          "power": 32004
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 27277
+        },
+        "user9": {
+          "index": 9,
+          "jobNo": 40,
+          "nickName": "복돌",
+          "position": "admin",
+          "power": 29387
+        }
+      },
+      "title": "6월 23일 레이드 - 글라스기브넨",
+      "type": "raid1"
+    },
+    "board5": {
+      "index": 5,
+      "isDeadLine": false,
+      "maxPartySize": 4,
+      "participants": {
+        "user1": {
+          "index": 1,
+          "jobNo": 41,
+          "nickName": "소소해",
+          "position": "master",
+          "power": 28771
+        },
+        "user2": {
+          "index": 2,
+          "jobNo": 21,
+          "nickName": "곱게자란소녀",
+          "position": "sub_master",
+          "power": 30073
+        },
+        "user23": {
+          "index": 23,
+          "jobNo": 50,
+          "nickName": "그라미",
+          "position": "member",
+          "power": 27500
+        },
+        "user26": {
+          "index": 26,
+          "jobNo": 33,
+          "nickName": "쵸연",
+          "position": "member",
+          "power": 29000
+        },
+        "user3": {
+          "index": 3,
+          "jobNo": 20,
+          "nickName": "좋아",
+          "position": "sub_master",
+          "power": 30500
+        },
+        "user4": {
+          "index": 4,
+          "jobNo": 41,
+          "nickName": "파르딕",
+          "position": "sub_master",
+          "power": 32000
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 27277
+        },
+        "user9": {
+          "index": 9,
+          "jobNo": 40,
+          "nickName": "복돌",
+          "position": "admin",
+          "power": 29387
+        }
+      },
+      "title": "6월 23일 레이드 - 화이트서큐버스",
+      "type": "raid2"
+    },
+    "board6": {
+      "index": 6,
+      "isDeadLine": false,
+      "maxPartySize": 4,
+      "participants": {
+        "user14": {
+          "index": 14,
+          "jobNo": 22,
+          "nickName": "쫄쫄이",
+          "position": "member",
+          "power": 31338
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 28100
+        }
+      },
+      "title": "6월 30일 어비스",
+      "type": "abyss"
+    },
+    "board7": {
+      "index": 7,
+      "isDeadLine": false,
+      "maxPartySize": 8,
+      "participants": {
+        "user14": {
+          "index": 14,
+          "jobNo": 22,
+          "nickName": "쫄쫄이",
+          "position": "member",
+          "power": 31338
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 28100
+        }
+      },
+      "title": "6월 30일 레이드 - 글라스기브넨",
+      "type": "raid1"
+    },
+    "board8": {
+      "index": 8,
+      "isDeadLine": false,
+      "maxPartySize": 4,
+      "participants": {
+        "user14": {
+          "index": 14,
+          "jobNo": 22,
+          "nickName": "쫄쫄이",
+          "position": "member",
+          "power": 31338
+        },
+        "user7": {
+          "index": 7,
+          "jobNo": 32,
+          "nickName": "바다별하",
+          "position": "member",
+          "power": 28100
+        }
+      },
+      "title": "6월 30일 레이드 - 화이트서큐버스",
+      "type": "raid2"
+    }
+  },
   "member": {
     "user1": {
       "index" : 1,
@@ -9,10 +475,10 @@
     },
     "user2": {
       "index" : 2,
-      "jobNo" : 21,
+      "jobNo" : 32,
       "pushToken": null,
-      "nickName": "곱게자란소녀",
-      "position" : "sub_master"
+      "nickName": "t없는우정",
+      "position" : "member"
     },
     "user3": {
       "index" : 3,
@@ -37,9 +503,9 @@
     },
     "user6": {
       "index" : 6,
-      "jobNo" : 52,
+      "jobNo" : 22,
       "pushToken": null,
-      "nickName": "딩초루",
+      "nickName": "가닝",
       "position" : "member"
     },
     "user7": {
@@ -86,9 +552,9 @@
     },
     "user13": {
       "index" : 13,
-      "jobNo" : 30,
+      "jobNo" : 50,
       "pushToken": null,
-      "nickName": "초록망고",
+      "nickName": "닭볶음파이",
       "position" : "member"
     },
     "user14": {
@@ -109,7 +575,7 @@
       "index" : 16,
       "jobNo" : 32,
       "pushToken": null,
-      "nickName": "팡아",
+      "nickName": "할배한테맴매맞자",
       "position" : "member"
     },
     "user17": {
@@ -128,9 +594,9 @@
     },
     "user19": {
       "index" : 19,
-      "jobNo" : 32,
+      "jobNo" : 30,
       "pushToken": null,
-      "nickName": "s폰토게네s",
+      "nickName": "펩시망고",
       "position" : "member"
     },
     "user20": {
@@ -149,7 +615,7 @@
     },
     "user22": {
       "index" : 22,
-      "jobNo" : 42,
+      "jobNo" : 11,
       "pushToken": null,
       "nickName": "연락처",
       "position" : "member"
@@ -203,9 +669,5 @@
       "nickName": "프루티",
       "position" : "member"
     }
-  },
-
-  "board" : {
-
   }
 }

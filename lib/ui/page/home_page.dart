@@ -57,19 +57,22 @@ class _HomePageState extends State<HomePage> {
           final homeViewModel = context.read<HomeViewModel>();
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              backgroundColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .inversePrimary,
               title: Text("${Strings.title}(${state.memberModel?.nickName ?? ""})"),
             ),
             floatingActionButton: homeViewModel.isAdmin()
                 ? FloatingActionButton(
-                    onPressed: () {
-                      _makeBoard(context, state);
-                    },
-                    child: const Icon(Icons.add),
-                  )
+              onPressed: () {
+                _makeBoard(context, state);
+              },
+              child: const Icon(Icons.add),
+            )
                 : null,
             body:
-                state.authStatus == AuthStatus.authed ? _showAuthed(state.boards, state.memberModel!) : _showNotAuth(),
+            state.authStatus == AuthStatus.authed ? _showAuthed(state.boards, state.memberModel!) : _showNotAuth(),
           );
         },
       ),
@@ -77,8 +80,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showNotAuth() {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme
+        .of(context)
+        .colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
 
     return paddingColumn(
       padding: const EdgeInsets.all(20),
@@ -107,17 +114,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showAuthed(List<BoardModel> boards, MemberModel memberModel) {
-    return ListView.builder(
-        itemCount: boards.length,
-        itemBuilder: (context, index) {
-          final board = boards[index];
-          return _makeCard(board, memberModel);
-        });
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      children: [
+        widgetSpace(height: 10),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(10),
+          color: colorScheme.secondaryRed,
+          child: Text("매주 월요일 20시 결계후 출발합니다.", style: textTheme.bodyB1Bold.copyWith(color: colorScheme.primaryWhite),textAlign: TextAlign.center,),
+        ),
+        widgetSpace(height: 10),
+        Expanded(
+          child: ListView.builder(
+            itemCount: boards.length,
+            itemBuilder: (context, index) {
+              final board = boards[index];
+              return _makeCard(board, memberModel);
+            },
+          ),
+        )
+      ],
+    );
   }
 
   Widget _makeCard(BoardModel boardModel, MemberModel memberModel) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
+    final colorScheme = Theme
+        .of(context)
+        .colorScheme;
 
     return GestureDetector(
       onTap: () {
@@ -180,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       boardModel.title,
                       style:
-                          textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: colorScheme.primaryColor),
+                      textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: colorScheme.primaryColor),
                     )
                   ],
                 )
@@ -190,10 +219,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _makeBoard(
-    BuildContext context,
-    AuthState state,
-  ) async {
+  Future<void> _makeBoard(BuildContext context,
+      AuthState state,) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
@@ -252,14 +279,22 @@ class _HomePageState extends State<HomePage> {
               });
             },
             children: labels
-                .map((label) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(label),
-                    ))
+                .map((label) =>
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(label),
+                ))
                 .toList(),
           ),
           widgetSpace(height: 10),
-          Text("${selectedDate.month}월 ${selectedDate.day}일",style:Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),)
+          Text(
+            "${selectedDate.month}월 ${selectedDate.day}일",
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          )
         ],
       );
     });
@@ -271,7 +306,14 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             "전투력 정확하게 적어주세요. (근사치 허용 ex.29540 > 29000)\n균등하게 파티가 분배됩니다.",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondaryRed),
+            style: Theme
+                .of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontWeight: FontWeight.bold, color: Theme
+                .of(context)
+                .colorScheme
+                .secondaryRed),
           ),
           widgetSpace(height: 5),
           ToggleButtons(
@@ -289,16 +331,21 @@ class _HomePageState extends State<HomePage> {
               });
             },
             children: attendLabels
-                .map((label) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(label),
-                    ))
+                .map((label) =>
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(label),
+                ))
                 .toList(),
           ),
           widgetSpace(height: 10),
           Text(
             "전투력",
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
           widgetSpace(height: 10),
           CommonTextField(

@@ -1,7 +1,7 @@
 name: libby_guild
 description: "리비 길드"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: '>=3.3.4 <4.0.0'

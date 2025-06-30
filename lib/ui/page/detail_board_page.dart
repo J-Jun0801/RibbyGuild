@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:libby_guild/common/utils.dart';
@@ -40,8 +41,9 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
             body: paddingColumn(
               padding: const EdgeInsets.all(20),
               children: [
-                SingleChildScrollView(
-                  child: Column(
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero, // 필요에 따라 조절
                     children: [
                       if (boardModel.type == "raid1") ...[
                         labelText(context: context, text: "총 인원 : ${boardModel.participants.length}명"),

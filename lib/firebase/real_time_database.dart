@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:libby_guild/data/member.dart';
+import 'package:libby_guild/ui/widgets/global_ui.dart';
 
 import '../data/board.dart';
 
@@ -21,16 +22,6 @@ const keyMaxPartySize = "maxPartySize";
 const keyIsDeadLine = "isDeadLine";
 const keyParticipants = "participants";
 
-Future<void> get() async {
-  final snapshot = await dbRef.child('').get();
-
-  if (snapshot.exists) {
-    print('읽은 데이터: ${snapshot.value}');
-  } else {
-    print('데이터가 존재하지 않습니다.');
-  }
-}
-
 Future<MemberModel?> findUserByNickname(String nickname) async {
   final ref = FirebaseDatabase.instance.ref(_keyMember);
   final snapshot = await ref.get();
@@ -48,6 +39,21 @@ Future<MemberModel?> findUserByNickname(String nickname) async {
   }
 
   return null; // 못 찾은 경우
+}
+
+Future<Map<String, dynamic>> getMembers() async {
+  final ref = FirebaseDatabase.instance.ref("member/");
+  final snapshot = await ref.get();
+
+  if (snapshot.exists && snapshot.value is Map) {
+    final rawMap = snapshot.value as Map;
+    final convertedMap = rawMap.map((key, value) =>
+        MapEntry(key.toString(), value as dynamic));
+
+    return convertedMap;
+  } else {
+    return {};
+  }
 }
 
 
@@ -114,4 +120,26 @@ Future<void> updateParticipants(BoardModel board, MemberModel memberModel) async
 Future<void> removeParticipants(BoardModel board, MemberModel memberModel) async {
   final ref = FirebaseDatabase.instance.ref("board/board${board.index}/participants/");
   await ref.child("user${memberModel.index}").remove();
+}
+
+Future<bool> addMember(String userId, Map<String, dynamic> memberData) async {
+  final ref = FirebaseDatabase.instance.ref("member/");
+  try {
+    await ref.child(userId).set(memberData);
+    return true;
+  } catch (e) {
+    print("에러 발생: $e");
+    return false;
+  }
+}
+
+Future<bool> deleteMember(String userId) async {
+  final ref = FirebaseDatabase.instance.ref("member/");
+  try {
+    await ref.child(userId).remove();
+    return true;
+  } catch (e) {
+    print("에러 발생: $e");
+    return false;
+  }
 }

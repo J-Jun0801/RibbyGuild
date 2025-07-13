@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:libby_guild/common/local_storage.dart';
 import 'package:libby_guild/data/board.dart';
 import 'package:libby_guild/data/member.dart';
@@ -18,6 +19,7 @@ import 'package:libby_guild/ui/widgets/global_ui.dart';
 import 'package:libby_guild/ui/widgets/text_field.dart';
 import 'package:libby_guild/vm/models/auth.dart';
 
+import '../../data/job.dart';
 import '../../res/strings.dart';
 import '../../vm/home_page.dart';
 import '../widgets/widgets.dart';
@@ -57,22 +59,35 @@ class _HomePageState extends State<HomePage> {
           final homeViewModel = context.read<HomeViewModel>();
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .inversePrimary,
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: Text("${Strings.title}(${state.memberModel?.nickName ?? ""})"),
             ),
             floatingActionButton: homeViewModel.isAdmin()
-                ? FloatingActionButton(
-              onPressed: () {
-                _makeBoard(context, state);
-              },
-              child: const Icon(Icons.add),
-            )
+                ? SpeedDial(
+                    icon: Icons.add,
+                    activeIcon: Icons.close,
+                    backgroundColor: Colors.indigoAccent,
+                    children: [
+                      SpeedDialChild(
+                        child: const Icon(Icons.playlist_add_circle),
+                        label: '컨텐츠 만들기',
+                        onTap: () => _makeBoard(context, state),
+                      ),
+                      SpeedDialChild(
+                        child: const Icon(Icons.person_add),
+                        label: '길드원 추가',
+                        onTap: () => _showAddMemberBottomSheet(),
+                      ),
+                      SpeedDialChild(
+                        child: const Icon(Icons.person_remove),
+                        label: '길드원 삭제',
+                        onTap: () => _showRemoveMemberBottomSheet(),
+                      ),
+                    ],
+                  )
                 : null,
             body:
-            state.authStatus == AuthStatus.authed ? _showAuthed(state.boards, state.memberModel!) : _showNotAuth(),
+                state.authStatus == AuthStatus.authed ? _showAuthed(state.boards, state.memberModel!) : _showNotAuth(),
           );
         },
       ),
@@ -80,12 +95,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showNotAuth() {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return paddingColumn(
       padding: const EdgeInsets.all(20),
@@ -124,7 +135,11 @@ class _HomePageState extends State<HomePage> {
           width: double.infinity,
           padding: const EdgeInsets.all(10),
           color: colorScheme.secondaryRed,
-          child: Text("매주 월요일 20시 결계후 출발합니다.", style: textTheme.bodyB1Bold.copyWith(color: colorScheme.primaryWhite),textAlign: TextAlign.center,),
+          child: Text(
+            "매주 월요일 20시 결계후 출발합니다.",
+            style: textTheme.bodyB1Bold.copyWith(color: colorScheme.primaryWhite),
+            textAlign: TextAlign.center,
+          ),
         ),
         widgetSpace(height: 10),
         Expanded(
@@ -181,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       boardModel.title,
                       style:
-                      textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: colorScheme.primaryColor),
+                          textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: colorScheme.primaryColor),
                     )
                   ],
                 )
@@ -191,8 +206,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _makeBoard(BuildContext context,
-      AuthState state,) async {
+  Future<void> _makeBoard(
+    BuildContext context,
+    AuthState state,
+  ) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
@@ -251,21 +268,16 @@ class _HomePageState extends State<HomePage> {
               });
             },
             children: labels
-                .map((label) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(label),
-                ))
+                .map((label) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(label),
+                    ))
                 .toList(),
           ),
           widgetSpace(height: 10),
           Text(
             "${selectedDate.month}월 ${selectedDate.day}일",
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
           )
         ],
       );
@@ -278,14 +290,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             "전투력 정확하게 적어주세요. (근사치 허용 ex.29540 > 29000)\n균등하게 파티가 분배됩니다.",
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .labelLarge!
-                .copyWith(fontWeight: FontWeight.bold, color: Theme
-                .of(context)
-                .colorScheme
-                .secondaryRed),
+                .copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondaryRed),
           ),
           widgetSpace(height: 5),
           ToggleButtons(
@@ -303,21 +311,16 @@ class _HomePageState extends State<HomePage> {
               });
             },
             children: attendLabels
-                .map((label) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(label),
-                ))
+                .map((label) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(label),
+                    ))
                 .toList(),
           ),
           widgetSpace(height: 10),
           Text(
             "전투력",
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
           ),
           widgetSpace(height: 10),
           CommonTextField(
@@ -334,15 +337,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> _selectTime(BuildContext context,BoardModel boardModel, MemberModel memberModel) async {
+  Future<void> _selectTime(BuildContext context, BoardModel boardModel, MemberModel memberModel) async {
     final nowDateTime = DateTime.now();
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(DateTime(nowDateTime.year,nowDateTime.month,nowDateTime.day,20,0,0)),
+      initialTime: TimeOfDay.fromDateTime(DateTime(nowDateTime.year, nowDateTime.month, nowDateTime.day, 20, 0, 0)),
     );
 
-
-    final pickedTime = picked != null ? picked.format(context): "오후 8:00";
+    final pickedTime = picked != null ? picked.format(context) : "오후 8:00";
 
     showWidgetTwoBottomSheet(
       context: context,
@@ -357,7 +359,8 @@ class _HomePageState extends State<HomePage> {
       rightText: "투표하기",
       onRightPressed: () async {
         if (attendSelectedIndex == 0) {
-          final copyMemberModel = memberModel.copyWith(power: int.parse(_powerTextEditingController.text), time: pickedTime);
+          final copyMemberModel =
+              memberModel.copyWith(power: int.parse(_powerTextEditingController.text), time: pickedTime);
           await updateParticipants(boardModel, copyMemberModel);
         } else {
           await removeParticipants(boardModel, memberModel);
@@ -367,6 +370,148 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
         );
+      },
+    );
+  }
+
+  void _showAddMemberBottomSheet() {
+    final _addNickNameTextEditingController = TextEditingController();
+    List<JobInfo> allJobs = [
+      ...Dealer.values,
+      ...Healer.values,
+      ...Tanker.values,
+    ];
+
+    JobInfo? selectedJob;
+
+    showWidgetTwoBottomSheet(
+      context: context,
+      widget: StatefulBuilder(builder: (context, bottomState) {
+        return Column(
+          children: [
+            CommonTextField(
+              hintText: "추가해야할 길드원 닉네임을 적어주세요",
+              textEditingController: _addNickNameTextEditingController,
+              valueChanged: (text) {
+                bottomState(() {});
+              },
+            ),
+            widgetSpace(height: 10),
+            DropdownButton<JobInfo>(
+              hint: Text("직업을 선택하세요"),
+              value: selectedJob,
+              items: allJobs.map((job) {
+                return DropdownMenuItem<JobInfo>(
+                  value: job,
+                  child: Text(job.koreanName),
+                );
+              }).toList(),
+              onChanged: (JobInfo? value) {
+                bottomState(() {
+                  selectedJob = value;
+                });
+              },
+            )
+          ],
+        );
+      }),
+      leftText: "취소",
+      onLeftPressed: () {
+        Navigator.pop(context);
+      },
+      rightText: "추가",
+      onRightPressed: () async {
+        if (_addNickNameTextEditingController.text.isEmpty) {
+          showSnackBar(context, "닉네임 입력해주세요");
+          return;
+        }
+
+        if (selectedJob == null) {
+          showSnackBar(context, "직업 입력해주세요");
+          return;
+        }
+
+        final members = await getMembers();
+        // print(members);
+        final userId = _findFirstAvailableIndex(members);
+        final result = await addMember("user$userId", {
+          "index": userId,
+          "jobNo": selectedJob!.jobNo,
+          "pushToken": null,
+          "nickName": _addNickNameTextEditingController.text,
+          "position": "member"
+        });
+
+        if(result){
+          Navigator.pop(context);
+          showSnackBar(context, "길드원 추가에 성공했습니다.");
+        }else{
+          Navigator.pop(context);
+          showSnackBar(context, "길드원 추가에 실패했습니다.");
+        }
+      },
+    );
+  }
+
+  int _findFirstAvailableIndex(Map<String, dynamic> memberMap) {
+    // 현재 등록된 index 리스트
+    List<int> indexes = memberMap.values.map((e) => e['index'] as int).toList();
+
+    indexes.sort();
+
+    // 1부터 차례로 비어있는 index 찾기
+    for (int i = 1; i <= indexes.length; i++) {
+      if (!indexes.contains(i)) {
+        return i;
+      }
+    }
+
+    // 다 차있으면 마지막 index + 1 리턴
+    return indexes.isEmpty ? 1 : indexes.last + 1;
+  }
+
+  void _showRemoveMemberBottomSheet() {
+    final _removeNickNameTextEditingController = TextEditingController();
+    showWidgetTwoBottomSheet(
+      context: context,
+      widget: StatefulBuilder(builder: (context, bottomState) {
+        return Column(
+          children: [
+            CommonTextField(
+              hintText: "삭제해야할 길드원 닉네임을 적어주세요",
+              textEditingController: _removeNickNameTextEditingController,
+              valueChanged: (text) {
+                bottomState(() {});
+              },
+            ),
+          ],
+        );
+      }),
+      leftText: "취소",
+      onLeftPressed: () {
+        Navigator.pop(context);
+      },
+      rightText: "삭제",
+      onRightPressed: () async {
+        if (_removeNickNameTextEditingController.text.isEmpty) {
+          showSnackBar(context, "닉네임 입력해주세요");
+          return;
+        }
+
+        final findMemberModel = await findUserByNickname(_removeNickNameTextEditingController.text);
+        if(findMemberModel == null ){
+          showSnackBar(context, "닉네임을 다시 입력해주세요. 찾을수 없습니다.");
+          return;
+        }
+
+        final result = await deleteMember("user${findMemberModel.index}");
+        if(result){
+          Navigator.pop(context);
+          showSnackBar(context, "길드원 삭제에 성공했습니다.");
+        }else{
+          Navigator.pop(context);
+          showSnackBar(context, "길드원 삭제에 실패했습니다.");
+        }
       },
     );
   }

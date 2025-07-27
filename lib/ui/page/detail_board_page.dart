@@ -35,8 +35,11 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
           final boardModel = homeViewModel.state.boards.where((element) => element.index == widget.boardIndex).first;
 
           final members = boardModel.participants.values.toList();
-          final eightPmMembers = members.where((m) => m.time == "오후 8:00").toList();
-          final otherMembers = members.where((m) => m.time != "오후 8:00").toList();
+          final attendMembers = members.where((m) => m.isAttend!).toList();
+          final anotherAttendMembers = members.where((m) => !m.isAttend!).toList();
+
+          final eightPmMembers = attendMembers.where((m) => m.time == "오후 8:00").toList();
+          final otherMembers = attendMembers.where((m) => m.time != "오후 8:00").toList();
           final parties =
               createSmartParties(eightPmMembers, maxPartySize: boardModel.maxPartySize);
 
@@ -72,6 +75,25 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                               padding: const EdgeInsets.only(left: 20),
                               children: [
                                 for (var member in otherMembers) ...[
+                                  Text(
+                                    "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
+                                    style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  widgetSpace(height: 10)
+                                ]
+                              ],
+                            ),
+                            widgetSpace(height: 20),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            labelText(context: context, text: "미참"),
+                            widgetSpace(height: 3),
+                            paddingColumn(
+                              padding: const EdgeInsets.only(left: 20),
+                              children: [
+                                for (var member in anotherAttendMembers) ...[
                                   Text(
                                     "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
                                     style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),

@@ -15,6 +15,7 @@ const keyPushToken = "pushToken";
 const keyPosition = "position";
 const keyPower = "power";
 const keyTime = "time";
+const keyIsAttend = "isAttend";
 
 const keyType = "type";
 const keyTitle = "title";

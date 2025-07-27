@@ -358,13 +358,10 @@ class _HomePageState extends State<HomePage> {
       },
       rightText: "투표하기",
       onRightPressed: () async {
-        if (attendSelectedIndex == 0) {
-          final copyMemberModel =
-              memberModel.copyWith(power: int.parse(_powerTextEditingController.text), time: pickedTime);
-          await updateParticipants(boardModel, copyMemberModel);
-        } else {
-          await removeParticipants(boardModel, memberModel);
-        }
+        final copyMemberModel = memberModel.copyWith(
+            power: int.parse(_powerTextEditingController.text), time: pickedTime, isAttend: attendSelectedIndex == 0);
+        await updateParticipants(boardModel, copyMemberModel);
+
         await context.read<HomeViewModel>().initialize();
         Navigator.push(
           context,
@@ -442,10 +439,10 @@ class _HomePageState extends State<HomePage> {
           "position": "member"
         });
 
-        if(result){
+        if (result) {
           Navigator.pop(context);
           showSnackBar(context, "길드원 추가에 성공했습니다.");
-        }else{
+        } else {
           Navigator.pop(context);
           showSnackBar(context, "길드원 추가에 실패했습니다.");
         }
@@ -499,16 +496,16 @@ class _HomePageState extends State<HomePage> {
         }
 
         final findMemberModel = await findUserByNickname(_removeNickNameTextEditingController.text);
-        if(findMemberModel == null ){
+        if (findMemberModel == null) {
           showSnackBar(context, "닉네임을 다시 입력해주세요. 찾을수 없습니다.");
           return;
         }
 
         final result = await deleteMember("user${findMemberModel.index}");
-        if(result){
+        if (result) {
           Navigator.pop(context);
           showSnackBar(context, "길드원 삭제에 성공했습니다.");
-        }else{
+        } else {
           Navigator.pop(context);
           showSnackBar(context, "길드원 삭제에 실패했습니다.");
         }

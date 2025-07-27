@@ -85,6 +85,14 @@ Future<void> updateSingleUser(int index, String? pushToken) async {
   });
 }
 
+Future<void> updatePowerSingleUser(int index, int power) async {
+  final ref = FirebaseDatabase.instance.ref("member/user$index");
+
+  await ref.update({
+    keyPower: power,
+  });
+}
+
 
 Future<List<BoardModel>> getBoardList() async {
   final ref = FirebaseDatabase.instance.ref(_keyBoard);

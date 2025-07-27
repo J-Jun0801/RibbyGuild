@@ -40,6 +40,8 @@ class _HomePageState extends State<HomePage> {
   int attendSelectedIndex = 0;
   DateTime? selectedDate;
 
+  String _nickName = "";
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +59,7 @@ class _HomePageState extends State<HomePage> {
       child: BlocBuilder<HomeViewModel, AuthState>(
         builder: (context, state) {
           final homeViewModel = context.read<HomeViewModel>();
+          _nickName = state.memberModel?.nickName ?? "";
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -284,7 +287,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget _makePowerContent() {
+  Future<Widget> _makePowerContent()  async {
+    final findMemberModel = await findUserByNickname(_nickName);
+    _powerTextEditingController.text = (findMemberModel?.power ?? 0).toString();
     return StatefulBuilder(builder: (context, bottomState) {
       return Column(
         children: [
@@ -348,7 +353,7 @@ class _HomePageState extends State<HomePage> {
 
     showWidgetTwoBottomSheet(
       context: context,
-      widget: _makePowerContent(),
+      widget: await _makePowerContent(),
       leftText: "파티보기",
       onLeftPressed: () {
         Navigator.push(
@@ -362,6 +367,8 @@ class _HomePageState extends State<HomePage> {
             power: int.parse(_powerTextEditingController.text), time: pickedTime, isAttend: attendSelectedIndex == 0);
         await updateParticipants(boardModel, copyMemberModel);
 
+        final findMemberModel = await findUserByNickname(_nickName);
+        await updatePowerSingleUser(findMemberModel!.index, int.parse(_powerTextEditingController.text));
         await context.read<HomeViewModel>().initialize();
         Navigator.push(
           context,

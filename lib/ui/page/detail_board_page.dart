@@ -95,7 +95,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                               children: [
                                 for (var member in anotherAttendMembers) ...[
                                   Text(
-                                    "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
+                                    "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)}",
                                     style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   widgetSpace(height: 10)

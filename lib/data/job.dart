@@ -30,6 +30,7 @@ enum Dealer implements JobInfo{
 enum Healer  implements JobInfo{
   healer(40, "힐러"),
   priest(41, "사제"),
+  monk(42, "수도사"),
   bard(50, "음유 시인"),
   ;
 
@@ -44,7 +45,6 @@ enum Healer  implements JobInfo{
 enum Tanker  implements JobInfo{
   warrior(10, "전사"),
   iceMage(33, "빙결 술사"),
-  monk(42, "수도사"),
   ;
 
   @override

@@ -47,6 +47,16 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: Text(boardModel.title),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () {
+                    // 이벤트 넣기
+                    final homeViewModel = context.read<HomeViewModel>();
+                    homeViewModel.initialize();
+                  },
+                ),
+              ],
             ),
             body: paddingColumn(
               padding: const EdgeInsets.all(20),

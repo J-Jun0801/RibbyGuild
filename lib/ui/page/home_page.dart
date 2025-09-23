@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(10),
           color: colorScheme.secondaryRed,
           child: Text(
-            "매주 월요일 20시 결계후 출발합니다.",
+            "매주 월요일 21시 결계후 출발합니다.",
             style: textTheme.bodyB1Bold.copyWith(color: colorScheme.primaryWhite),
             textAlign: TextAlign.center,
           ),
@@ -346,10 +346,10 @@ class _HomePageState extends State<HomePage> {
     final nowDateTime = DateTime.now();
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(DateTime(nowDateTime.year, nowDateTime.month, nowDateTime.day, 20, 0, 0)),
+      initialTime: TimeOfDay.fromDateTime(DateTime(nowDateTime.year, nowDateTime.month, nowDateTime.day, 21, 0, 0)),
     );
 
-    final pickedTime = picked != null ? picked.format(context) : "오후 8:00";
+    final pickedTime = picked != null ? picked.format(context) : "오후 9:00";
 
     showWidgetTwoBottomSheet(
       context: context,

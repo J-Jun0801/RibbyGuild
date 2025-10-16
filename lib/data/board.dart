@@ -67,7 +67,7 @@ class BoardModel {
 
   static String convertType(int index) {
     if (index == 0) {
-      return "abyss";
+      return "abyss2";
     } else if (index == 1) {
       return "raid1";
     } else if (index == 2) {

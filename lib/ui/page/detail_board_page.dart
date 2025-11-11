@@ -40,8 +40,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
 
           final eightPmMembers = attendMembers.where((m) => m.time == "오후 9:00").toList();
           final otherMembers = attendMembers.where((m) => m.time != "오후 9:00").toList();
-          final parties =
-              createSmartParties(eightPmMembers, maxPartySize: boardModel.maxPartySize);
+          final parties = createSmartParties(eightPmMembers, maxPartySize: boardModel.maxPartySize);
 
           return Scaffold(
             appBar: AppBar(
@@ -63,19 +62,8 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
               children: [
                 Expanded(
                   child: ListView(
-                    padding: EdgeInsets.zero, // 필요에 따라 조절
-                    children: [
-                      if (boardModel.type == "raid1") ...[
-                        labelText(context: context, text: "총 인원 : ${boardModel.participants.length}명"),
-                        for (final member in boardModel.participants.values.toList()) ...[
-                          Text(
-                            "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)}",
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          widgetSpace(height: 10)
-                        ]
-                      ] else ...[
-
+                      padding: EdgeInsets.zero, // 필요에 따라 조절
+                      children: [
                         for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i]),
                         Column(
                           children: [
@@ -115,9 +103,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                             widgetSpace(height: 20),
                           ],
                         )
-                      ]
-                    ],
-                  ),
+                      ]),
                 )
               ],
             ),
@@ -131,7 +117,10 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        labelText(context: context, text: "${index + 1} 파티\n총 투력 : ${withComma(party.totalPower)}\n 평균 투력 : ${withComma((party.totalPower/4).round())}"),
+        labelText(
+            context: context,
+            text:
+                "${index + 1} 파티\n총 투력 : ${withComma(party.totalPower)}\n 평균 투력 : ${withComma((party.totalPower / 4).round())}"),
         widgetSpace(height: 3),
         paddingColumn(
           padding: const EdgeInsets.only(left: 20),
@@ -201,77 +190,73 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
     return parties;
   }
 
-
-
 // List<Party> createSmartParties(List<MemberModel> members, {int maxPartySize = 4}) {
-  //   // 전투력 높은 순으로 정렬
-  //   members = List.from(members)..sort((a, b) => (b.power ?? 0).compareTo(a.power ?? 0));
-  //
-  //   final totalPartyCount = (members.length / maxPartySize).ceil();
-  //   final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
-  //
-  //   int partyIndex = 0;
-  //
-  //   // snake 방향
-  //   bool forward = true;
-  //
-  //   // 직업별 나누기
-  //   final healers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Healer').toList();
-  //   final tankers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Tanker').toList();
-  //   final dealers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Dealer').toList();
-  //
-  //   // 각 파티 최소 힐1
-  //   for (var i = 0; i < totalPartyCount; i++) {
-  //     if (healers.isNotEmpty) {
-  //       parties[i].members.add(healers.removeAt(0));
-  //     }
-  //   }
-  //
-  //   // 각 파티 최소 탱1 (없으면 힐러로)
-  //   for (var i = 0; i < totalPartyCount; i++) {
-  //     if (tankers.isNotEmpty) {
-  //       parties[i].members.add(tankers.removeAt(0));
-  //     } else if (healers.isNotEmpty) {
-  //       parties[i].members.add(healers.removeAt(0));
-  //     }
-  //   }
-  //
-  //   // 각 파티 최소 딜러 2명
-  //   for (var j = 0; j < 2; j++) {
-  //     for (var i = 0; i < totalPartyCount; i++) {
-  //       if (dealers.isNotEmpty) {
-  //         parties[i].members.add(dealers.removeAt(0));
-  //       }
-  //     }
-  //   }
-  //
-  //   // 남은 인원 (힐/탱/딜 전부) 다시 전투력 높은 순으로 snake로 배분
-  //   final remainingMembers = [
-  //     ...healers,
-  //     ...tankers,
-  //     ...dealers,
-  //   ];
-  //
-  //   while (remainingMembers.isNotEmpty) {
-  //     final member = remainingMembers.removeAt(0);
-  //
-  //     while (!parties[partyIndex].canAdd(member, maxPartySize)) {
-  //       partyIndex += (forward ? 1 : -1);
-  //
-  //       if (partyIndex >= totalPartyCount) {
-  //         partyIndex = totalPartyCount - 1;
-  //         forward = false;
-  //       } else if (partyIndex < 0) {
-  //         partyIndex = 0;
-  //         forward = true;
-  //       }
-  //     }
-  //
-  //     parties[partyIndex].members.add(member);
-  //   }
-  //
-  //   return parties;
-  // }
-
-
+//   // 전투력 높은 순으로 정렬
+//   members = List.from(members)..sort((a, b) => (b.power ?? 0).compareTo(a.power ?? 0));
+//
+//   final totalPartyCount = (members.length / maxPartySize).ceil();
+//   final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
+//
+//   int partyIndex = 0;
+//
+//   // snake 방향
+//   bool forward = true;
+//
+//   // 직업별 나누기
+//   final healers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Healer').toList();
+//   final tankers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Tanker').toList();
+//   final dealers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Dealer').toList();
+//
+//   // 각 파티 최소 힐1
+//   for (var i = 0; i < totalPartyCount; i++) {
+//     if (healers.isNotEmpty) {
+//       parties[i].members.add(healers.removeAt(0));
+//     }
+//   }
+//
+//   // 각 파티 최소 탱1 (없으면 힐러로)
+//   for (var i = 0; i < totalPartyCount; i++) {
+//     if (tankers.isNotEmpty) {
+//       parties[i].members.add(tankers.removeAt(0));
+//     } else if (healers.isNotEmpty) {
+//       parties[i].members.add(healers.removeAt(0));
+//     }
+//   }
+//
+//   // 각 파티 최소 딜러 2명
+//   for (var j = 0; j < 2; j++) {
+//     for (var i = 0; i < totalPartyCount; i++) {
+//       if (dealers.isNotEmpty) {
+//         parties[i].members.add(dealers.removeAt(0));
+//       }
+//     }
+//   }
+//
+//   // 남은 인원 (힐/탱/딜 전부) 다시 전투력 높은 순으로 snake로 배분
+//   final remainingMembers = [
+//     ...healers,
+//     ...tankers,
+//     ...dealers,
+//   ];
+//
+//   while (remainingMembers.isNotEmpty) {
+//     final member = remainingMembers.removeAt(0);
+//
+//     while (!parties[partyIndex].canAdd(member, maxPartySize)) {
+//       partyIndex += (forward ? 1 : -1);
+//
+//       if (partyIndex >= totalPartyCount) {
+//         partyIndex = totalPartyCount - 1;
+//         forward = false;
+//       } else if (partyIndex < 0) {
+//         partyIndex = 0;
+//         forward = true;
+//       }
+//     }
+//
+//     parties[partyIndex].members.add(member);
+//   }
+//
+//   return parties;
+// }
 }

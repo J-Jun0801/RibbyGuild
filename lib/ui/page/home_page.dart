@@ -34,7 +34,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _nickNameTextEditingController = TextEditingController();
   final _powerTextEditingController = TextEditingController();
-  final List<String> labels = ["어비스", "레이드-글라스기브넨", "레이드-화이트서큐버스"];
+  final List<String> labels = ["어비스", "레이드-글라스기브넨", "레이드-화이트서큐버스", "레이드-타바르타스"];
   final List<String> attendLabels = ["참석", "미참석"];
   int selectedIndex = 0;
   int attendSelectedIndex = 0;
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
             fillColor: Colors.indigoAccent,
             color: Colors.black,
             selectedColor: Colors.white,
-            isSelected: List.generate(3, (i) => i == selectedIndex),
+            isSelected: List.generate(4, (i) => i == selectedIndex),
             onPressed: (int index) {
               bottomState(() {
                 selectedIndex = index;

@@ -60,7 +60,10 @@ class BoardModel {
       return "레이드 - 글라스기브넨";
     } else if (type == "raid2") {
       return "레이드 - 화이트서큐버스";
-    } else {
+    } else if (type == "raid3") {
+      return "레이드 - 타바르타스";
+    }
+    else {
       return "";
     }
   }
@@ -72,6 +75,8 @@ class BoardModel {
       return "raid1";
     } else if (index == 2) {
       return "raid2";
+    } else if (index == 3) {
+      return "raid3";
     } else {
       return "";
     }
@@ -84,7 +89,9 @@ class BoardModel {
       return 8;
     } else if (index == 2) {
       return 4;
-    } else {
+    } else if (index == 3) {
+      return 8;
+    }else {
       return 4;
     }
   }

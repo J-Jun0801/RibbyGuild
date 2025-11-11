@@ -64,7 +64,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                   child: ListView(
                       padding: EdgeInsets.zero, // 필요에 따라 조절
                       children: [
-                        for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i]),
+                        for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i], boardModel.maxPartySize),
                         Column(
                           children: [
                             labelText(context: context, text: "그 외"),
@@ -113,14 +113,14 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
     );
   }
 
-  Widget _drawParty(int index, Party party) {
+  Widget _drawParty(int index, Party party, int maxPartySize) {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
         labelText(
             context: context,
             text:
-                "${index + 1} 파티\n총 투력 : ${withComma(party.totalPower)}\n 평균 투력 : ${withComma((party.totalPower / 4).round())}"),
+                "${index + 1} 파티\n총 투력 : ${withComma(party.totalPower)}\n 평균 투력 : ${withComma((party.totalPower / maxPartySize).round())}"),
         widgetSpace(height: 3),
         paddingColumn(
           padding: const EdgeInsets.only(left: 20),

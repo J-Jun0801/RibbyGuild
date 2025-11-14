@@ -63,9 +63,9 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                           final boardList = await getBoardList();
                           print(">>>>>>>>>>>>>>>>> ${widget.boardIndex}");
                           final board = boardList.where((element) => element.getIndex() == widget.boardIndex).first;
-                          board.participants.values.forEachIndexed((index, element) {
+                          board.participants.values.forEachIndexed((index, element) async {
                             final modifyMemberModel = element.copyWith(isPartyFix: true);
-                            updateParticipants(board, modifyMemberModel);
+                            await updateParticipants(board, modifyMemberModel);
                           });
 
                           final homeViewModel = context.read<HomeViewModel>();

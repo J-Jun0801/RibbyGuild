@@ -43,8 +43,8 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
           final anotherAttendMembers = members.where((m) => !m.isAttend!).toList();
 
           final eightPmMembers = attendMembers.where((m) => m.time == "오후 9:00").toList();
-          final partyFixMembers = eightPmMembers.where((m) => m.isPartyFix == true).toList();
-          final partyNotFixMembers = eightPmMembers.where((m) => m.isPartyFix != true).toList();
+          final partyFixMembers = eightPmMembers.where((m) => m.isPartyFix == null || m.isPartyFix == true).toList();
+          final partyNotFixMembers = eightPmMembers.where((m) => m.isPartyFix == false).toList();
 
           final pm9AfterMembers = attendMembers.where((m) => m.time != "오후 9:00").toList();
           final parties = createSmartParties(partyFixMembers, maxPartySize: boardModel.maxPartySize);

@@ -10,6 +10,7 @@ class MemberModel {
   final int? power;
   final String? time;
   final bool? isAttend;
+  final bool? isPartyFix;
 
   MemberModel({
     required this.index,
@@ -19,7 +20,8 @@ class MemberModel {
     required this.position,
     this.power,
     this.time,
-    this.isAttend
+    this.isAttend,
+    this.isPartyFix,
   });
 
   factory MemberModel.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,8 @@ class MemberModel {
       position: json[keyPosition],
       power: json[keyPower],
       time: json[keyTime],
-      isAttend: json[keyIsAttend]
+      isAttend: json[keyIsAttend],
+      isPartyFix: json[keyIsPartyFix]
     );
   }
 
@@ -45,6 +48,7 @@ class MemberModel {
       keyPower: power,
       keyTime: time,
       keyIsAttend: isAttend,
+      keyIsPartyFix : isPartyFix
     };
   }
 
@@ -56,7 +60,8 @@ class MemberModel {
     String? position,
     int? power,
     String? time,
-    bool? isAttend
+    bool? isAttend,
+    bool? isPartyFix
   }) {
     return MemberModel(
       index: index ?? this.index,
@@ -67,6 +72,7 @@ class MemberModel {
       power: power ?? this.power,
       time: time ?? this.time,
       isAttend: isAttend ?? this.isAttend,
+      isPartyFix: isPartyFix ?? this.isPartyFix,
     );
   }
 }

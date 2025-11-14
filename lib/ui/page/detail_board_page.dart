@@ -1,9 +1,13 @@
+import 'dart:html';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:libby_guild/common/utils.dart';
+import 'package:libby_guild/firebase/real_time_database.dart';
 import 'package:libby_guild/ui/widgets/widgets.dart';
 
 import '../../data/board.dart';
@@ -39,10 +43,38 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
           final anotherAttendMembers = members.where((m) => !m.isAttend!).toList();
 
           final eightPmMembers = attendMembers.where((m) => m.time == "오후 9:00").toList();
-          final otherMembers = attendMembers.where((m) => m.time != "오후 9:00").toList();
-          final parties = createSmartParties(eightPmMembers, maxPartySize: boardModel.maxPartySize);
+          final partyFixMembers = eightPmMembers.where((m) => m.isPartyFix == true).toList();
+          final partyNotFixMembers = eightPmMembers.where((m) => m.isPartyFix != true).toList();
+
+          final pm9AfterMembers = attendMembers.where((m) => m.time != "오후 9:00").toList();
+          final parties = createSmartParties(partyFixMembers, maxPartySize: boardModel.maxPartySize);
 
           return Scaffold(
+            floatingActionButton: homeViewModel.isAdmin()
+                ? SpeedDial(
+                    icon: Icons.add,
+                    activeIcon: Icons.close,
+                    backgroundColor: Colors.indigoAccent,
+                    children: [
+                      SpeedDialChild(
+                        child: const Icon(Icons.lock_clock_outlined),
+                        label: '컨텐츠 마감',
+                        onTap: () async {
+                          final boardList = await getBoardList();
+                          print(">>>>>>>>>>>>>>>>> ${widget.boardIndex}");
+                          final board = boardList.where((element) => element.getIndex() == widget.boardIndex).first;
+                          board.participants.values.forEachIndexed((index, element) {
+                            final modifyMemberModel = element.copyWith(isPartyFix: true);
+                            updateParticipants(board, modifyMemberModel);
+                          });
+
+                          final homeViewModel = context.read<HomeViewModel>();
+                          homeViewModel.initialize();
+                        },
+                      ),
+                    ],
+                  )
+                : null,
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: Text(boardModel.title),
@@ -67,12 +99,27 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                         for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i], boardModel.maxPartySize),
                         Column(
                           children: [
-                            labelText(context: context, text: "그 외"),
+                            labelText(context: context, text: "21시 그외 인원"),
                             widgetSpace(height: 3),
                             paddingColumn(
                               padding: const EdgeInsets.only(left: 20),
                               children: [
-                                for (var member in otherMembers) ...[
+                                for (var member in partyNotFixMembers) ...[
+                                  Text(
+                                    "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
+                                    style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  widgetSpace(height: 10)
+                                ]
+                              ],
+                            ),
+                            widgetSpace(height: 20),
+                            labelText(context: context, text: "21시 이후 참여 하시는 분들"),
+                            widgetSpace(height: 3),
+                            paddingColumn(
+                              padding: const EdgeInsets.only(left: 20),
+                              children: [
+                                for (var member in pm9AfterMembers) ...[
                                   Text(
                                     "${member.nickName} / ${JobUtil.getJobNameByJobNo(member.jobNo)} / ${withComma(member.power!)} / ${member.time}",
                                     style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
@@ -189,74 +236,4 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
 
     return parties;
   }
-
-// List<Party> createSmartParties(List<MemberModel> members, {int maxPartySize = 4}) {
-//   // 전투력 높은 순으로 정렬
-//   members = List.from(members)..sort((a, b) => (b.power ?? 0).compareTo(a.power ?? 0));
-//
-//   final totalPartyCount = (members.length / maxPartySize).ceil();
-//   final List<Party> parties = List.generate(totalPartyCount, (_) => Party());
-//
-//   int partyIndex = 0;
-//
-//   // snake 방향
-//   bool forward = true;
-//
-//   // 직업별 나누기
-//   final healers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Healer').toList();
-//   final tankers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Tanker').toList();
-//   final dealers = members.where((m) => JobUtil.getJobGroupByJobNo(m.jobNo) == 'Dealer').toList();
-//
-//   // 각 파티 최소 힐1
-//   for (var i = 0; i < totalPartyCount; i++) {
-//     if (healers.isNotEmpty) {
-//       parties[i].members.add(healers.removeAt(0));
-//     }
-//   }
-//
-//   // 각 파티 최소 탱1 (없으면 힐러로)
-//   for (var i = 0; i < totalPartyCount; i++) {
-//     if (tankers.isNotEmpty) {
-//       parties[i].members.add(tankers.removeAt(0));
-//     } else if (healers.isNotEmpty) {
-//       parties[i].members.add(healers.removeAt(0));
-//     }
-//   }
-//
-//   // 각 파티 최소 딜러 2명
-//   for (var j = 0; j < 2; j++) {
-//     for (var i = 0; i < totalPartyCount; i++) {
-//       if (dealers.isNotEmpty) {
-//         parties[i].members.add(dealers.removeAt(0));
-//       }
-//     }
-//   }
-//
-//   // 남은 인원 (힐/탱/딜 전부) 다시 전투력 높은 순으로 snake로 배분
-//   final remainingMembers = [
-//     ...healers,
-//     ...tankers,
-//     ...dealers,
-//   ];
-//
-//   while (remainingMembers.isNotEmpty) {
-//     final member = remainingMembers.removeAt(0);
-//
-//     while (!parties[partyIndex].canAdd(member, maxPartySize)) {
-//       partyIndex += (forward ? 1 : -1);
-//
-//       if (partyIndex >= totalPartyCount) {
-//         partyIndex = totalPartyCount - 1;
-//         forward = false;
-//       } else if (partyIndex < 0) {
-//         partyIndex = 0;
-//         forward = true;
-//       }
-//     }
-//
-//     parties[partyIndex].members.add(member);
-//   }
-//
-//   return parties;
-// }
 }

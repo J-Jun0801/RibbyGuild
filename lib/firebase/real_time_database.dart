@@ -16,6 +16,7 @@ const keyPosition = "position";
 const keyPower = "power";
 const keyTime = "time";
 const keyIsAttend = "isAttend";
+const keyIsPartyFix = "isPartyFix";
 
 const keyType = "type";
 const keyTitle = "title";

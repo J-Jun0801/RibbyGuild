@@ -96,5 +96,7 @@ class BoardModel {
     }
   }
 
-
+  int getIndex() {
+    return index;
+  }
 }

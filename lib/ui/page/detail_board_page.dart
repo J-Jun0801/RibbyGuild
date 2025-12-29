@@ -99,7 +99,7 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                         for (int i = 0; i < parties.length; i++) _drawParty(i, parties[i], boardModel.maxPartySize),
                         Column(
                           children: [
-                            labelText(context: context, text: "9시 참석 인원 (마감 이후)"),
+                            labelText(context: context, text: "9시 참석 인원 (마감 이후) / ${partyNotFixMembers.length}명"),
                             widgetSpace(height: 3),
                             paddingColumn(
                               padding: const EdgeInsets.only(left: 20),

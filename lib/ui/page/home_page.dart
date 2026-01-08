@@ -65,30 +65,35 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: Text("${Strings.title}(${state.memberModel?.nickName ?? ""})"),
             ),
-            floatingActionButton: homeViewModel.isAdmin()
-                ? SpeedDial(
-                    icon: Icons.add,
-                    activeIcon: Icons.close,
-                    backgroundColor: Colors.indigoAccent,
-                    children: [
-                      SpeedDialChild(
-                        child: const Icon(Icons.playlist_add_circle),
-                        label: '컨텐츠 만들기',
-                        onTap: () => _makeBoard(context, state),
-                      ),
-                      SpeedDialChild(
-                        child: const Icon(Icons.person_add),
-                        label: '길드원 추가',
-                        onTap: () => _showAddMemberBottomSheet(),
-                      ),
-                      SpeedDialChild(
-                        child: const Icon(Icons.person_remove),
-                        label: '길드원 삭제',
-                        onTap: () => _showRemoveMemberBottomSheet(),
-                      ),
-                    ],
-                  )
-                : null,
+            floatingActionButton: SpeedDial(
+              icon: Icons.add,
+              activeIcon: Icons.close,
+              backgroundColor: Colors.indigoAccent,
+              children: [
+                if (homeViewModel.isAdmin()) ...[
+                  SpeedDialChild(
+                    child: const Icon(Icons.playlist_add_circle),
+                    label: '컨텐츠 만들기',
+                    onTap: () => _makeBoard(context, state),
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.person_add),
+                    label: '길드원 추가',
+                    onTap: () => _showAddMemberBottomSheet(),
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.person_remove),
+                    label: '길드원 삭제',
+                    onTap: () => _showRemoveMemberBottomSheet(),
+                  ),
+                ],
+                SpeedDialChild(
+                  child: const Icon(Icons.mode),
+                  label: '닉네입 변경',
+                  onTap: () => _showModifyMemberBottomSheet(),
+                ),
+              ],
+            ),
             body:
                 state.authStatus == AuthStatus.authed ? _showAuthed(state.boards, state.memberModel!) : _showNotAuth(),
           );
@@ -287,7 +292,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<Widget> _makePowerContent()  async {
+  Future<Widget> _makePowerContent() async {
     final findMemberModel = await findUserByNickname(_nickName);
     _powerTextEditingController.text = (findMemberModel?.power ?? 0).toString();
     return StatefulBuilder(builder: (context, bottomState) {
@@ -475,7 +480,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showRemoveMemberBottomSheet() {
-    final _removeNickNameTextEditingController = TextEditingController();
+    final removeNickNameTextEditingController = TextEditingController();
     showWidgetTwoBottomSheet(
       context: context,
       widget: StatefulBuilder(builder: (context, bottomState) {
@@ -483,7 +488,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             CommonTextField(
               hintText: "삭제해야할 길드원 닉네임을 적어주세요",
-              textEditingController: _removeNickNameTextEditingController,
+              textEditingController: removeNickNameTextEditingController,
               valueChanged: (text) {
                 bottomState(() {});
               },
@@ -497,12 +502,12 @@ class _HomePageState extends State<HomePage> {
       },
       rightText: "삭제",
       onRightPressed: () async {
-        if (_removeNickNameTextEditingController.text.isEmpty) {
+        if (removeNickNameTextEditingController.text.isEmpty) {
           showSnackBar(context, "닉네임 입력해주세요");
           return;
         }
 
-        final findMemberModel = await findUserByNickname(_removeNickNameTextEditingController.text);
+        final findMemberModel = await findUserByNickname(removeNickNameTextEditingController.text);
         if (findMemberModel == null) {
           showSnackBar(context, "닉네임을 다시 입력해주세요. 찾을수 없습니다.");
           return;
@@ -515,6 +520,50 @@ class _HomePageState extends State<HomePage> {
         } else {
           Navigator.pop(context);
           showSnackBar(context, "길드원 삭제에 실패했습니다.");
+        }
+      },
+    );
+  }
+
+  void _showModifyMemberBottomSheet() {
+    final modifyNickNameTextEditingController = TextEditingController();
+    showWidgetTwoBottomSheet(
+      context: context,
+      widget: StatefulBuilder(builder: (context, bottomState) {
+        return Column(
+          children: [
+            CommonTextField(
+              hintText: "변경할 닉네임을 적어주세요",
+              textEditingController: modifyNickNameTextEditingController,
+              valueChanged: (text) {
+                bottomState(() {});
+              },
+            ),
+          ],
+        );
+      }),
+      leftText: "취소",
+      onLeftPressed: () {
+        Navigator.pop(context);
+      },
+      rightText: "변경",
+      onRightPressed: () async {
+        if (modifyNickNameTextEditingController.text.isEmpty) {
+          showSnackBar(context, "닉네임 입력해주세요");
+          return;
+        }
+        final homeViewModel = context.read<HomeViewModel>();
+
+        final findMemberModel = homeViewModel.state.memberModel!;
+
+        final result = await addMember("user${findMemberModel.index}", findMemberModel.copyWith(nickName: modifyNickNameTextEditingController.text).toJson());
+        if (result) {
+          Navigator.pop(context);
+          showSnackBar(context, "닉네임 변경에 성공했습니다.");
+          homeViewModel.saveNickName(modifyNickNameTextEditingController.text);
+        } else {
+          Navigator.pop(context);
+          showSnackBar(context, "닉네임 변경에 실패했습니다.");
         }
       },
     );

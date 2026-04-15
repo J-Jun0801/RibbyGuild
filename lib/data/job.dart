@@ -45,6 +45,7 @@ enum Healer  implements JobInfo{
 
 enum Tanker  implements JobInfo{
   warrior(10, "전사"),
+  knight(13, "기사"),
   iceMage(33, "빙결 술사"),
   ;
 
@@ -78,5 +79,17 @@ class JobUtil {
     }
 
     return "";
+  }
+
+  static List<JobInfo> getAllJobsSorted() {
+    final List<JobInfo> allJobs = [
+      ...Dealer.values,
+      ...Healer.values,
+      ...Tanker.values,
+    ];
+
+    allJobs.sort((a, b) => a.jobNo.compareTo(b.jobNo));
+
+    return allJobs;
   }
 }

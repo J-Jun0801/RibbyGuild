@@ -6,7 +6,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:libby_guild/common/local_storage.dart';
 import 'package:libby_guild/data/board.dart';
 import 'package:libby_guild/data/member.dart';
-import 'package:libby_guild/firebase/firebase_cloud_messing.dart';
 import 'package:libby_guild/firebase/real_time_database.dart';
 import 'package:libby_guild/res/colors.dart';
 import 'package:libby_guild/res/constant_res.dart';
@@ -91,6 +90,11 @@ class _HomePageState extends State<HomePage> {
                   child: const Icon(Icons.mode),
                   label: '닉네입 변경',
                   onTap: () => _showModifyMemberBottomSheet(),
+                ),
+                SpeedDialChild(
+                  child: const Icon(Icons.mode),
+                  label: '직업 변경',
+                  onTap: () => _showModifyJobBottomSheet(),
                 ),
               ],
             ),
@@ -556,7 +560,8 @@ class _HomePageState extends State<HomePage> {
 
         final findMemberModel = homeViewModel.state.memberModel!;
 
-        final result = await addMember("user${findMemberModel.index}", findMemberModel.copyWith(nickName: modifyNickNameTextEditingController.text).toJson());
+        final result = await addMember("user${findMemberModel.index}",
+            findMemberModel.copyWith(nickName: modifyNickNameTextEditingController.text).toJson());
         if (result) {
           Navigator.pop(context);
           showSnackBar(context, "닉네임 변경에 성공했습니다.");
@@ -564,6 +569,56 @@ class _HomePageState extends State<HomePage> {
         } else {
           Navigator.pop(context);
           showSnackBar(context, "닉네임 변경에 실패했습니다.");
+        }
+      },
+    );
+  }
+
+  void _showModifyJobBottomSheet() {
+    final sortedJobs = JobUtil.getAllJobsSorted();
+    JobInfo selectJob = sortedJobs[0];
+
+    showWidgetTwoBottomSheet(
+      context: context,
+      widget: StatefulBuilder(builder: (context, bottomState) {
+        return Column(
+          children: [
+            Text("변경할 직업을 선택해주세요"),
+            SizedBox(
+              height: 8,
+            ),
+            DropdownMenu<String>(
+              initialSelection: selectJob.koreanName,
+              onSelected: (value) {
+                print(value);
+                selectJob = sortedJobs.firstWhere((e) => e.koreanName == value);
+              },
+              dropdownMenuEntries: [...sortedJobs.map((e) => e.koreanName).toList()]
+                  .map((e) => DropdownMenuEntry(value: e, label: e))
+                  .toList(),
+            )
+          ],
+        );
+      }),
+      leftText: "취소",
+      onLeftPressed: () {
+        Navigator.pop(context);
+      },
+      rightText: "변경",
+      onRightPressed: () async {
+        final homeViewModel = context.read<HomeViewModel>();
+
+        final findMemberModel = homeViewModel.state.memberModel!;
+
+        final result = await addMember("user${findMemberModel.index}", findMemberModel.copyWith(jobNo: selectJob.jobNo).toJson());
+
+        if (result) {
+          Navigator.pop(context);
+          showSnackBar(context, "직업 변경에 성공했습니다.");
+          homeViewModel.initialize();
+        } else {
+          Navigator.pop(context);
+          showSnackBar(context, "직업 변경에 실패했습니다.");
         }
       },
     );

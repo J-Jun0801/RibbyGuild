@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,8 +6,6 @@ import 'package:libby_guild/common/local_storage.dart';
 import 'package:libby_guild/res/strings.dart';
 import 'package:libby_guild/ui/page/home_page.dart';
 import 'package:libby_guild/vm/home_page.dart';
-
-import 'firebase/firebase_cloud_messing.dart';
 
 final MyLocalStorage localStorage = MyLocalStorage();
 
@@ -26,8 +23,6 @@ void main() async {
         measurementId: "G-Q62JTBFCE0",
         databaseURL: "https://ribbyguild-default-rtdb.firebaseio.com"),
   );
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await setupFlutterNotifications();
   runApp(const MyApp());
 }
 

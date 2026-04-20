@@ -10,6 +10,7 @@ import 'package:libby_guild/common/utils.dart';
 import 'package:libby_guild/firebase/real_time_database.dart';
 import 'package:libby_guild/ui/widgets/widgets.dart';
 
+import '../../common/logger.dart';
 import '../../data/board.dart';
 import '../../data/job.dart';
 import '../../data/member.dart';
@@ -18,9 +19,10 @@ import '../../vm/home_page.dart';
 import '../../vm/models/auth.dart';
 
 class DetailBoardPage extends StatefulWidget {
-  const DetailBoardPage(this.boardIndex, {super.key});
+  const DetailBoardPage(this.boardIndex, this.memberMap, {super.key});
 
   final int boardIndex;
+  final Map<String, dynamic> memberMap;
 
   @override
   State<DetailBoardPage> createState() => _DetailBoardPageState();
@@ -49,6 +51,15 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
           final pm9AfterMembers = attendMembers.where((m) => m.time != "오후 9:00").toList();
           final parties = createSmartParties(partyFixMembers, maxPartySize: boardModel.maxPartySize);
 
+          final memberNickNames = members
+              .map((e) => e.nickName)
+              .toSet();
+
+          final notVotedMembers = widget.memberMap.values.where((e) {
+            final nickName = e["nickName"] as String;
+            return !memberNickNames.contains(nickName);
+          }).toList();
+          logger.d(">>>>>>>>>>>>> $notVotedMembers");
           return Scaffold(
             floatingActionButton: homeViewModel.isAdmin()
                 ? SpeedDial(
@@ -149,7 +160,27 @@ class _DetailBoardPageState extends State<DetailBoardPage> {
                             ),
                             widgetSpace(height: 20),
                           ],
-                        )
+                        ),
+                        widgetSpace(height: 20),
+                        Column(
+                          children: [
+                            labelText(context: context, text: "미투표 인원"),
+                            widgetSpace(height: 3),
+                            paddingColumn(
+                              padding: const EdgeInsets.only(left: 20),
+                              children: [
+                                for (var member in notVotedMembers) ...[
+                                  Text(
+                                    "${member["nickName"]} / ${JobUtil.getJobNameByJobNo(member["jobNo"])}",
+                                    style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  widgetSpace(height: 10)
+                                ]
+                              ],
+                            ),
+                            widgetSpace(height: 20),
+                          ],
+                        ),
                       ]),
                 )
               ],

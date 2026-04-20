@@ -364,10 +364,12 @@ class _HomePageState extends State<HomePage> {
       context: context,
       widget: await _makePowerContent(),
       leftText: "파티보기",
-      onLeftPressed: () {
+      onLeftPressed: () async {
+        final memberMap = await getMembers();
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
+          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index, memberMap)),
         );
       },
       rightText: "투표하기",
@@ -379,9 +381,11 @@ class _HomePageState extends State<HomePage> {
         final findMemberModel = await findUserByNickname(_nickName);
         await updatePowerSingleUser(findMemberModel!.index, int.parse(_powerTextEditingController.text));
         await context.read<HomeViewModel>().initialize();
+
+        final memberMap = await getMembers();
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index)),
+          MaterialPageRoute(builder: (context) => DetailBoardPage(boardModel.index, memberMap)),
         );
       },
     );
